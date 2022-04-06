@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Form Daftar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Daftar</h1>
+        <form name="formPendaftaran" action="daftar.php" class="daftar" method="post" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label>PIC Name</label>
+                <input type="text" name="pic name" placeholder="PIC Name" class="form-control" required maxlength="40" minlength="3">
+            </div>
+            <div class="form-group">
+                <label>Company Name</label>
+                <input type="text" name="company name" placeholder="Company Name" class="form-control" required maxlength="40" minlength="3">
+            </div>
+            <div class="form-group">
+                <label>Email/Username</label>
+                <input type="email" name="email" placeholder="Email/Username" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Service Group</label>
+                <select name="service group" class="form-control">
+                        <option value="0">Select Group</option>
+                        <option value="1">Shared</option>
+                        <option value="2">Dedicated</option>
+                        <option value="3">OnPrem</option>
+                    </select>
+            </div>
+            <div class="form-group">
+                <label>Service Type</label>
+                <label class="container">FAQ
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
+                <label class="container">Transactional
+                  <input type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
+            </div>
+            <script>
+                function myFunction() {
+                        var x = document.getElementById("channels").value;
+                        if(x.document.display === "none") {
+                            x.document.display = "block";
+                        }
+                        else {
+                            x.document.display = "none";
+                        }
+                    }
+                </script>
+                <label>Channels</label>
+                 
+                <select id="channels" class="form-control" onchange="myFunction()">
+                  <option value="">Select Channel</option>
+                  <option value="Whatsapp">Whatsapp
+                  <option value="Telegram">Telegram
+                  <option value="Slack">Slack
+                  <option value="Coster">Coster
+                  <option value="Custom">Custom
+                </select>                 
+                <p id="channel"></p>
+
+            <div class="form-group">
+                <label>Channel Name</label>
+                <input type="channel name" name="channel name" placeholder="Channel Name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Password" class="form-control">
+            </div>
+            <style>
+                .captcha
+                { font: italic bold 16px "Comic Sans MS", cursive, sans-serif; 
+                color:#a0a0a0;background-color:#c0c0c0;
+                width:100px;border-radius: 5px;
+                text-align:center;
+                text-decoration:line-through;
+                }
+                .errmsg
+                {color:#ff0000;}
+                </style>
+                <script>
+                var captcha= new Array ();
+                function validateRecaptcha(){
+                    var recaptcha= document.getElementById("recaptcha").value;;
+                    var validRecaptcha=0;
+                    for(var z=0; z<6; z++){
+                        if(recaptcha.charAt(z)!= captcha[z]){
+                            validRecaptcha++;
+                        }
+                    }
+                    if (recaptcha == ""){
+                        document.getElementById('errCaptcha').innerHTML = 'Re-Captcha must be filled';
+                    } else if (validRecaptcha>0 || recaptcha.length>6){
+                        document.getElementById('errCaptcha').innerHTML = 'Sorry, Wrong Re-Captcha';
+                    } else{
+                        document.getElementById('errCaptcha').innerHTML = 'OK';
+                    }
+                }
+                function createCaptcha(){
+                    for(q=0; q<6 ; q++){
+                        if(q %2 ==0){
+                            captcha[q] = String.fromCharCode(Math.floor((Math.random()*26)+65));
+                        }else{      
+                            captcha[q] = Math.floor((Math.random()*10)+0);
+                        }
+                    }
+                    thecaptcha=captcha.join("");
+                    document.getElementById('captcha').innerHTML=
+                     "<span class='captcha'> " + thecaptcha+ " </span>" + "&nbsp; <a onclick='createCaptcha()' href='#'>recaptcha</a>"; 
+                }
+                </script>
+                </head>
+                <body>
+                <table>
+                <tr><td>Captcha : </td>
+                    <td id="captcha">
+                    <script> createCaptcha(); </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Type Captcha : </td>
+                    <td><input type="text" name="recaptcha" id="recaptcha" placeholder="Type the captcha"/></td>
+                    <td id="errCaptcha" class="errmsg"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:right;">
+                        <input type="button" value="Submit" onClick="validateRecaptcha()"/>
+                    </td>
+                </tr>
+                </table>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <script>
+        function validateForm() {
+            if (document.forms["formPendaftaran"]["pic name"].value == "") {
+                alert("PIC Name Can't Be Empty");
+                document.forms["formPendaftaran"]["pic name"].focus();
+                return false;
+            }
+            if (document.forms["formPendaftaran"]["company name"].value == "") {
+                alert("Company Name Can't Be Empty");
+                document.forms["formPendaftaran"]["company name"].focus();
+                return false;
+            }
+            if (document.forms["formPendaftaran"]["email"].value == "") {
+                alert("Email Cannot Be Empty");
+                document.forms["formPendaftaran"]["email"].focus();
+                return false;
+            }
+            if (document.forms["formPendaftaran"]["service group"].selectedIndex < 1) {
+                alert("Select Group");
+                document.forms["formPendaftaran"]["service group"].focus();
+                return false;
+            }
+            if (document.forms["formPendaftaran"]["channels"].selectedIndex < 1) {
+                alert("Select Channel");
+                document.forms["formPendaftaran"]["channels"].focus();
+                return false;
+            }
+            if (document.forms["formPendaftaran"]["password"].value == "") {
+                alert("Password Can't Be Empty");
+                document.forms["formPendaftaran"]["password"].focus();
+                return false;
+            }
+            if (document.forms["formPendaftaran"]["captcha"].value == "") {
+                alert("Re-Captcha must be filled");
+                document.forms["formPendaftaran"]["captcha"].focus();
+                return false;
+            }
+        }
+        function demo() {
+            const toggleBtn = document.querySelector('5');
+            const divList = document.querySelector('channel name');
+
+            toggleBtn.addEventListener('click', () => {
+                if(divList.style.display === 'none') {
+                    divList.style.display = 'block';
+                } else {
+                    divList.style.display = 'none';
+                }
+            })
+        }
+
+        
+    </script>
+</body>
+
+</html>
